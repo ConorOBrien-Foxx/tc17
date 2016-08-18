@@ -143,7 +143,7 @@ config = JSON.parse config_file.read
 initial = config["initial"]
 initial = :empty if initial == "empty"
 
-$insert = eval %x(ruby desc.rb #{config["insert"]})
+$insert = eval %x(ruby desc.rb "#{config["insert"]}")
 $cell_width = config["cell width"]
 $field_width = config["field"]["width"]
 $field_height = config["field"]["height"]
