@@ -2,32 +2,35 @@
 
 $ends = []
 
+##,$,.,:,;,?,@,C,D,E,F,I,R,_,g,i,l,r,s,u,w,~
 commands = {
-    "r" => "stack.push rand",
-    "R" => "stack.push rand 0..stack.pop",
     "," => "stack.push 1 / stack.pop.to_f",
-    "l" => "stack.push bti[stack.pop >= stack.pop]",
-    "#" => "stack.pop unless itb[stack.pop]",
-    ";" => "return stack.pop",
+    "#" => "stack.pop if itb[stack.pop]",
+    "$" => "stack.pop",
     "." => lambda { $ends.pop || "end" },
-    "?" => "if itb stack.pop",
-    "w" => "while stack.last",
-    "u" => "until stack.last",
+    ":" => "stack.push stack.last",
+    ";" => "return stack.pop",
+    "?" => "if itb[stack.pop]",
     "@" => lambda {
-        $ends.push "break if stack.last\nend"
+        $ends.push "break if itb[stack.last]\nend"
         "loop do"
     },
-    "$" => "stack.pop",
-    ":" => "stack.push stack.last",
+    "C" => "stack = []",
     "D" => "stack.concat stack",
-    "_" => "stack.push -stack.pop",
-    "i" => "stack.push input[stack.pop]",
-    "I" => "stack.push stack.pop.to_i",
-    "F" => "stack.push stack.pop.to_f",
     "E" => "stack.push bti[stack.pop.empty?]",
-    "~" => "[stack.pop, stack.pop].each { |e| stack.push e }",
+    "F" => "stack.push stack.pop.to_f",
+    "I" => "stack.push stack.pop.to_i",
+    "R" => "stack.push rand 0...stack.pop",
+    "S" => "stack.push stack.pop.size",
+    "_" => "stack.push -stack.pop",
     "g" => "stack.push stack.pop[stack.pop]",
-    "s" => "return stack"
+    "i" => "stack.push input[stack.pop]",
+    "l" => "stack.push bti[stack.pop >= stack.pop]",
+    "r" => "stack.push rand",
+    "s" => "return stack",
+    "u" => "until itb[stack.last]",
+    "w" => "while itb[stack.last]",
+    "~" => "[stack.pop, stack.pop].each { |e| stack.push e }",
 }
 
 (0...16).each { |c|
@@ -43,7 +46,7 @@ program = ARGV[0] == "-r" || ARGV[0] == "/r" ? open(ARGV[1], "r").read : ARGV.jo
 output = "
 lambda { |input = []|
 bti = -> (v) { v ? 1 : 0}
-itb = -> (v) { v == 0 }
+itb = -> (v) { v != 0 }
 stack = []
 "
 
