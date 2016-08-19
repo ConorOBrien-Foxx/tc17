@@ -14,6 +14,8 @@ Being compiled to ruby, there are some analogies to ruby and similar languages:
 
 Since `.` is end, `w` followed by some stuff then `.` is a while loop.
 
+There are 16 number-related commands: `0` through `9` and `a` through `f`, which push to the stack `0` through `9` and `10` through `15`, respectively.
+
 Other than that, there are stack manipulation commands:
 
  * `,` - pops `A` and pushes `1 / A` (regular division, not ruby division).
@@ -21,7 +23,21 @@ Other than that, there are stack manipulation commands:
  * `$` - drops the top of the stack.
  * `:` - duplicates the top of the stack.
  * `;` - returns the top of the stack.
- * (more tba)
+ * `C` - clears the stack.
+ * `D` - duplicates the entire stack.
+ * `E` - pops `x` and pushes `x.empty?`.
+ * `F` - converts the TOS to a float.
+ * `I` - converts the TOS to an integer.
+ * `L` - pushes the size of the stack.
+ * `R` - pops `m`; pushes a random number in [0, m)
+ * `S` - pops `x`; pushes `x.size`.
+ * `_` - negates the top of the stack.
+ * `g` - pops `a` then `i`; pushes `a[i]`.
+ * `i` - pops `i` and pushes `input[i]`.
+ * `l` - pops `x` then `y`; pushes `x >= y`.
+ * `r` - pushes a random float in [0, 1).
+ * `s` - returns the stack.
+ * `~` - switches top two members of stack.
 
 ## Some examples
 
@@ -47,21 +63,6 @@ When `rand >= 1/10`, we pop the top value of the stack, `4`, and return `2`. Oth
 
 Here is a more complex example from the `insert rule` in the config:
 
-    @C3R3RD0iggE.$s
+    @C0i:0~gSR~SRD0iggE.$s
 
-Now, let's diagram this:
-
-    @C3R3RD0iggE.$s                                                  stack
-    @           .    this is a do..while loop over what's inside     []
-     C               clears the stack                                []
-      3R             push a random number in 0..3 (call it r_x)      [r_x]
-        3R           (do it again; call it r_y)                      [r_x, r_y]
-          D          duplicate the stack                             [r_x, r_y, r_x, r_y]
-           0i        get the zeroeth input item (the grid)           [r_x, r_y, r_x, r_y, grid]
-             g       pushes grid[r_y]                                [r_x, r_y, r_x, grid[r_y]]
-              g      the same, with r_x                              [r_x, r_y, grid[r_y][r_x]]
-               E     value representign the emptiness of the cell    [r_x, r_y, cell_is_empty]
-                 $   drop the condition                              [r_x, r_y]
-                  s  return the stack
-
-In words, this find the first random non empty cell and returns its location.
+It is left as an exercise to the reader to figure out how this works.

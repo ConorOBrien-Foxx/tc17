@@ -20,6 +20,7 @@ commands = {
     "E" => "stack.push bti[stack.pop.empty?]",
     "F" => "stack.push stack.pop.to_f",
     "I" => "stack.push stack.pop.to_i",
+    "L" => "stack.push stack.size",
     "R" => "stack.push rand 0...stack.pop",
     "S" => "stack.push stack.pop.size",
     "_" => "stack.push -stack.pop",

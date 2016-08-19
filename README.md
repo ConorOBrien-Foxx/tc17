@@ -14,7 +14,8 @@ Currently, here are the customizable options:
 
 * `objective`: this is the tile that triggers the game-end victory state. Default: `2048`.
 * `initial`: this is what tile is first on the board. Default: `"empty"`.
-* `insert`: this is a `desc` rule that details which cell is inserted after each term. Default: `24a,rl#;`
+* `insert`: this is a `desc` rule that details which cell is inserted after each term; it receives no input and is to output one numeric value. Default: `24a,rl#;`
+* `insert rule`: this is a `desc` rule that takes the `grid` as input and outputs a coordinate pair `[x, y]` stating where to place the number given by `insert`.
 * `cell width`: this is the visual width of the cell. Increase if you wish to have larger tiles fit more comfortably on your screen. Default: `6`.
 * `start amount`: the amount of starting tiles on the screen. (spawns at least 1 tile) Default: `2`.
 * `field`:
