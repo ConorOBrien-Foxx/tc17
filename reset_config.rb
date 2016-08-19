@@ -4,6 +4,7 @@ config = {
     "objective"     => 2048,
     "initial"       => "empty",
     "insert"        => "24a,rl#;",
+    "insert rule"   => "@3R3RD0iggE.$s",
     "cell width"    => 6,
     "start amount"  => 2,
     "field"         => {

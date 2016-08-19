@@ -125,17 +125,14 @@ end
 
 def insert_rand_cell(grid)
     return grid if grid.all? { |row| row.none? &:empty? }
-    r_x = 0
-    r_y = 0
-    loop do
-        r_x = rand 0..3
-        r_y = rand 0..3
-        break if grid[r_y][r_x].empty?
-    end
+    
+    r_x, r_y = $insert_rule[[grid]]
     
     grid[r_y][r_x] = Cell.new $insert[]
     grid
 end
+
+get_desc = -> (prog) { eval %x(ruby desc.rb "#{prog}") }
 
 config_file = open(ARGV[0] || "config.json")
 config = JSON.parse config_file.read
@@ -143,14 +140,15 @@ config = JSON.parse config_file.read
 initial = config["initial"]
 initial = :empty if initial == "empty"
 
-$insert = eval %x(ruby desc.rb "#{config["insert"]}")
+$insert = get_desc[config["insert"]]
+$insert_rule = get_desc[config["insert rule"]]
 $cell_width = config["cell width"]
 $field_width = config["field"]["width"]
 $field_height = config["field"]["height"]
 
 field = Array.new($field_height) { Array.new($field_width) { Cell.new initial } }
 
-(config["start amount"] - 1).times {
+config["start amount"].times {
     field = insert_rand_cell field
 }
 
@@ -160,7 +158,6 @@ objective = config["objective"]
 loop do
     clear
     puts "Objective: #{objective}"
-    field = insert_rand_cell field
     disp field
     if field.any? { |row| row.any? { |e| e.value == objective } }
         puts "Congratulations! You win!"
@@ -195,4 +192,6 @@ loop do
     field = a_field if input == "a"
     field = s_field if input == "s"
     field = d_field if input == "d"
+    
+    field = insert_rand_cell field
 end
