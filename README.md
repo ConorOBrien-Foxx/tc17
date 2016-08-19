@@ -25,7 +25,6 @@ Currently, here are the customizable options:
 ## Planned
 
 * `deterministic` mode. Tiles always spawn in the top left corner, or closest tile after that (starting with (0, 0) then (1, 0), etc.).
-* `insert rule`: this would govern the way tiles are inserted. This will not come until I flesh out `desc` a little more so that I can describe my current random-cell function in it easily.
 * More choices for `cell width`, including `adjust` (starts at 6, and all cell width's increase to make room for larger tiles) and `dynamic` (each cell's width is equal to that of the longest number's length in that column).
 
 ## FAQ
